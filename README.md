@@ -6,7 +6,7 @@ This script allows you to send messages and embeds to a Discord channel using a 
 
 1. **Clone the Repository**: 
    ```
-   git clone(https://github.com/Nozdormv/discord-webhook.git)
+   git clone https://github.com/Nozdormv/discord-webhook.git
    ```
 
 2. **Navigate to the Directory**:
