@@ -18,11 +18,20 @@ async function sendMessageToWebhook(message, options = {}) {
     console.log('\x1b[33m%s\x1b[0m', '\nMessage successfully sent to Discord!');
     console.log('\x1b[33m%s\x1b[0m', '------------------------------------\n');
 
-    // Confirm after sending the message
-    promptForAnotherMessage();
-
   } catch (error) {
     console.error('Error sending message to Discord webhook:', error.response.data);
+    logError(error);
+  }
+}
+
+// Function to log errors to a file
+async function logError(error) {
+  const errorMessage = `${new Date().toISOString()} - Error: ${error.message}\n`;
+  try {
+    await fs.appendFile('error.log', errorMessage);
+    console.log('Error logged to error.log');
+  } catch (err) {
+    console.error('Error writing to error log:', err);
   }
 }
 
@@ -42,7 +51,7 @@ async function promptForAnotherMessage() {
     promptUser();
   } else {
     // If user doesn't want to send another message, exit the script
-    console.log('\x1b[33m%s\x1b[0m', '\nExitting...\n');
+    console.log('\x1b[33m%s\x1b[0m', '\nExiting...\n');
     process.exit();
   }
 }
@@ -67,6 +76,8 @@ async function promptUser() {
       },
     ]);
     sendMessageToWebhook(message);
+    // Confirm after sending the message
+    promptForAnotherMessage();
   } else if (messageType === 'Embed') {
     // The existing embed logic goes here...
   }
