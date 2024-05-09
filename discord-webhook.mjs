@@ -174,12 +174,21 @@ async function promptUser() {
   }
 }
 
+// Function to send a default message to the webhook after successful configuration
+async function sendDefaultMessage() {
+  const defaultMessage = ":tada: Congrats! If you see this message, the integration has been properly configured!";
+  await sendMessageToWebhook(defaultMessage);
+}
+
 // Function to prompt for configuration options before starting the interaction
 async function startScript() {
   if (!config.webhookUrl) {
     await promptForConfig();
+    // Send default message after configuration
+    await sendDefaultMessage();
+  } else {
+    promptUser();
   }
-  promptUser();
 }
 
 // Call the startScript function to start the interaction
